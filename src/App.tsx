@@ -339,6 +339,7 @@ const App: React.FC = () => {
               description:
                 'Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what\'s consuming your space.',
               cta: 'View Screenshot',
+              image: '/images/feature-sunburst.png',
             },
             {
               number: '02',
@@ -346,6 +347,7 @@ const App: React.FC = () => {
               description:
                 'Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what\'s happening.',
               cta: 'See Performance',
+              image: '/images/feature-scan.png',
             },
           ].map((feature, i) => (
             <div
@@ -371,9 +373,12 @@ const App: React.FC = () => {
               </div>
               <div className={`flex-1 ${i === 1 ? 'lg:order-0' : ''}`}>
                 <Glass className="rounded-2xl p-2 overflow-hidden h-[400px]">
-                  <div className="w-full h-full placeholder-pattern rounded-xl flex items-center justify-center relative z-10">
-                    <span className="text-[#6b6560] text-sm">GIF Placeholder</span>
-                  </div>
+                  <img
+                    src={feature.image}
+                    alt={feature.title}
+                    className="w-full h-full object-contain rounded-xl relative z-10"
+                    loading="lazy"
+                  />
                 </Glass>
               </div>
             </div>
