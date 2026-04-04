@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Zap, Palette, BarChart3, Shield, Download, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Zap, Palette, BarChart3, Shield, Download, ChevronRight, X } from 'lucide-react';
 import { BlurText } from './components/BlurText';
 import { Glass } from './components/Glass';
 import { SectionBadge } from './components/SectionBadge';
@@ -194,7 +194,86 @@ const StatsContent: React.FC = () => {
   );
 };
 
+// ─── Screenshot Modal ─────────────────────────────────────────────────
+
+interface ScreenshotModalProps {
+  src: string;
+  alt: string;
+  onClose: () => void;
+}
+
+const ScreenshotModal: React.FC<ScreenshotModalProps> = ({ src, alt, onClose }) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEsc);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="backdrop"
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <motion.div
+          key="modal"
+          className="relative max-w-5xl w-full"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ duration: 0.25, ease: EASE }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            onClick={onClose}
+            className="absolute -top-12 right-0 text-[#a09888] hover:text-[#f5f0eb] transition-colors"
+            aria-label="Close preview"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <img
+            src={src}
+            alt={alt}
+            className="w-full h-auto rounded-2xl shadow-2xl"
+          />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 const App: React.FC = () => {
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
+
+  const features = [
+    {
+      number: '01',
+      title: 'Interactive Sunburst Visualization',
+      description:
+        'Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what\'s consuming your space.',
+      cta: 'Preview',
+      image: '/images/feature-sunburst.png',
+    },
+    {
+      number: '02',
+      title: 'Lightning-Fast Scanning Engine',
+      description:
+        'Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what\'s happening.',
+      cta: 'Preview',
+      image: '/images/feature-scan.png',
+    },
+  ];
+
   return (
     <div className="bg-[#0a0a0a] min-h-screen relative">
 
@@ -332,24 +411,7 @@ const App: React.FC = () => {
             Native power. Beautiful design.
           </h2>
 
-          {[
-            {
-              number: '01',
-              title: 'Interactive Sunburst Visualization',
-              description:
-                'Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what\'s consuming your space.',
-              cta: 'View Screenshot',
-              image: '/images/feature-sunburst.png',
-            },
-            {
-              number: '02',
-              title: 'Lightning-Fast Scanning Engine',
-              description:
-                'Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what\'s happening.',
-              cta: 'See Performance',
-              image: '/images/feature-scan.png',
-            },
-          ].map((feature, i) => (
+          {features.map((feature, i) => (
             <div
               key={feature.number}
               className={`flex flex-col lg:flex-row items-center gap-16 ${i === 0 ? 'mb-28' : ''}`}
@@ -365,7 +427,10 @@ const App: React.FC = () => {
                   {feature.description}
                 </p>
                 <Glass variant="strong" rounded="rounded-lg" className="px-6 py-2.5 inline-block glow-button">
-                  <button className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]">
+                  <button
+                    className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]"
+                    onClick={() => setModalImage({ src: feature.image, alt: feature.title })}
+                  >
                     {feature.cta}
                     <ChevronRight className="w-4 h-4 text-[#d4a054]" />
                   </button>
@@ -499,6 +564,15 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Screenshot Modal */}
+      {modalImage && (
+        <ScreenshotModal
+          src={modalImage.src}
+          alt={modalImage.alt}
+          onClose={() => setModalImage(null)}
+        />
+      )}
     </div>
   );
 };
