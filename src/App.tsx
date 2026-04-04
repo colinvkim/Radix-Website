@@ -209,7 +209,7 @@ const App: React.FC = () => {
       <section className="relative h-[1000px] flex flex-col">
         <div className="absolute inset-0 z-0">
           <VideoBackground
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4"
+            src="/videos/hero.mp4"
             poster="/images/hero_bg.jpeg"
             top="20%"
             className="w-full h-auto"
