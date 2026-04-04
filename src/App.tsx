@@ -64,21 +64,21 @@ interface GlassButtonProps {
 }
 
 const GlassButton: React.FC<GlassButtonProps> = ({ href, children, className = '', fullWidth, trackLabel }) => (
-  <a
-    href={href}
-    className={`flex items-center justify-center gap-2.5 px-8 py-4 text-[15px] font-semibold text-[#f5f0eb] tracking-wide ${fullWidth ? 'w-full sm:w-auto' : ''} ${className}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    onClick={() => trackLabel && trackClick(trackLabel)}
+  <Glass
+    variant="strong"
+    rounded="rounded-lg"
+    className={`px-8 py-4 glow-button text-center ${fullWidth ? 'w-full sm:w-auto' : ''} ${className}`}
   >
-    <Glass
-      variant="strong"
-      rounded="rounded-lg"
-      className="w-full h-full glow-button"
+    <a
+      href={href}
+      className="flex items-center justify-center gap-2.5 text-[15px] font-semibold text-[#f5f0eb] tracking-wide"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackLabel && trackClick(trackLabel)}
     >
       {children}
-    </Glass>
-  </a>
+    </a>
+  </Glass>
 );
 
 interface FeatureCardProps {
@@ -426,17 +426,15 @@ const App: React.FC = () => {
                 <p className="text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-8 max-w-lg">
                   {feature.description}
                 </p>
-                <button
-                  className="inline-block w-full sm:w-auto"
-                  onClick={() => setModalImage({ src: feature.image, alt: feature.title })}
-                >
-                  <Glass variant="strong" rounded="rounded-lg" className="px-6 py-2.5 glow-button">
-                    <span className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]">
-                      {feature.cta}
-                      <ChevronRight className="w-4 h-4 text-[#d4a054]" />
-                    </span>
-                  </Glass>
-                </button>
+                <Glass variant="strong" rounded="rounded-lg" className="px-6 py-2.5 inline-block glow-button">
+                  <button
+                    className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]"
+                    onClick={() => setModalImage({ src: feature.image, alt: feature.title })}
+                  >
+                    {feature.cta}
+                    <ChevronRight className="w-4 h-4 text-[#d4a054]" />
+                  </button>
+                </Glass>
               </div>
               <div className={`flex-1 ${i === 1 ? 'lg:order-0' : ''}`}>
                 <Glass className="rounded-2xl p-2 overflow-hidden h-[400px]">
