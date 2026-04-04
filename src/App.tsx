@@ -142,7 +142,7 @@ const App: React.FC = () => {
           >
             <Glass className="px-5 py-2.5 inline-flex items-center gap-3">
               <span className="px-2.5 py-0.5 bg-[#d4a054] text-[#0a0a0a] rounded-full text-[10px] font-semibold tracking-wide uppercase">
-                Native
+                Open Source
               </span>
               <span className="text-xs font-medium text-white/90 tracking-wide">
                 See your disk space in a whole new way
@@ -318,10 +318,10 @@ const App: React.FC = () => {
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            <FeatureCard icon={<Zap className="w-6 h-6 text-[#d4a054]" />} title="Native macOS App" description="Built in Swift and SwiftUI for unprecedented performance. No Electron, no compromises." />
-            <FeatureCard icon={<Palette className="w-6 h-6 text-[#d4a054]" />} title="Privacy-First" description="Permission-aware scanning keeps your data secure. Nothing leaves your Mac, ever." />
-            <FeatureCard icon={<BarChart3 className="w-6 h-6 text-[#d4a054]" />} title="Real-Time Scanning" description="Watch progress live as Radix discovers and visualizes your files in real-time." />
-            <FeatureCard icon={<Shield className="w-6 h-6 text-[#d4a054]" />} title="MIT Licensed" description="Open source and transparent. No subscriptions, no tracking, no hidden costs." />
+            <FeatureCard icon={<Zap className="w-6 h-6 text-[#d4a054]" />} title="Sunburst Visualization" description="Explore your disk with an interactive circular chart. Click any segment to drill down into nested directories." />
+            <FeatureCard icon={<Palette className="w-6 h-6 text-[#d4a054]" />} title="Sort & Filter" description="Sort files by size, name, or date. Filter by file type to quickly find what's taking up space." />
+            <FeatureCard icon={<BarChart3 className="w-6 h-6 text-[#d4a054]" />} title="Drop to Scan" description="Drag and drop any folder to instantly scan. See real-time progress as Radix traverses your files." />
+            <FeatureCard icon={<Shield className="w-6 h-6 text-[#d4a054]" />} title="Privacy-First" description="Everything runs locally on your Mac. No data collection, no telemetry, no account required." />
           </div>
         </motion.div>
       </section>
