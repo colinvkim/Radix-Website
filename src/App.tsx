@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Zap, Palette, BarChart3, Shield, Download, ChevronRight, FileCode, Layout, Monitor } from 'lucide-react';
+import { ArrowUpRight, Zap, Palette, BarChart3, Shield, Download, ChevronRight } from 'lucide-react';
 import { BlurText } from './components/BlurText';
 import { Glass } from './components/Glass';
 import { SectionBadge } from './components/SectionBadge';
@@ -113,24 +113,6 @@ const StatItem: React.FC<StatItemProps> = ({ value, label, delay }) => (
   </div>
 );
 
-interface TechBadgeProps {
-  icon: React.ReactNode;
-  name: string;
-  description: string;
-}
-
-const TechBadge: React.FC<TechBadgeProps> = ({ icon, name, description }) => (
-  <div className="flex flex-col items-center text-center gap-3">
-    <Glass className="w-16 h-16 md:w-20 md:h-20 rounded-xl flex items-center justify-center">
-      {icon}
-    </Glass>
-    <div>
-      <h4 className="text-base md:text-lg font-display italic text-[#f5f0eb]">{name}</h4>
-      <p className="text-[11px] text-[#6b6560] font-body font-light">{description}</p>
-    </div>
-  </div>
-);
-
 // ─── Main App ─────────────────────────────────────────────────────────
 const App: React.FC = () => {
   return (
@@ -213,19 +195,6 @@ const App: React.FC = () => {
               </a>
             </Glass>
           </motion.div>
-        </div>
-
-        <div className="mt-auto pb-10 pt-16 px-4 md:px-8 lg:px-12">
-          <div className="max-w-4xl mx-auto flex flex-col items-center">
-            <Glass className="px-4 py-2 mb-8">
-              <span className="text-[11px] font-medium text-white/70 tracking-widest uppercase">Built with</span>
-            </Glass>
-            <div className="grid grid-cols-3 gap-4 md:gap-8 w-full max-w-2xl">
-              <TechBadge icon={<FileCode className="w-7 h-7 md:w-8 md:h-8 text-[#d4a054]" />} name="Swift" description="Native binary" />
-              <TechBadge icon={<Layout className="w-7 h-7 md:w-8 md:h-8 text-[#d4a054]" />} name="SwiftUI" description="Declarative UI" />
-              <TechBadge icon={<Monitor className="w-7 h-7 md:w-8 md:h-8 text-[#d4a054]" />} name="macOS" description="Native APIs" />
-            </div>
-          </div>
         </div>
       </section>
 
