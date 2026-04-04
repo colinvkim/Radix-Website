@@ -6,6 +6,8 @@ import { Glass } from './components/Glass';
 import { SectionBadge } from './components/SectionBadge';
 import { VideoBackground } from './components/VideoBackground';
 import { VideoFade } from './components/VideoFade';
+import { AnimatedCounter } from './components/AnimatedCounter';
+import { useGitHubStats, formatCompactNumber } from './hooks/useGitHubStats';
 
 // Inline GitHub icon — removed from lucide-react v1
 const GithubIcon = (props: { className?: string }) => (
@@ -103,17 +105,94 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) =
 interface StatItemProps {
   value: string;
   label: string;
-  delay: number;
 }
 
-const StatItem: React.FC<StatItemProps> = ({ value, label, delay }) => (
+const StatItem: React.FC<StatItemProps> = ({ value, label }) => (
   <div className="text-center">
-    <BlurText text={value} className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block" delay={delay} />
+    <BlurText text={value} className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block" delay={0} />
+    <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
+  </div>
+);
+
+interface DynamicStatItemProps {
+  targetValue: number;
+  label: string;
+  formatFn?: (value: number) => string;
+  suffix?: string;
+  prefix?: string;
+}
+
+const DynamicStatItem: React.FC<DynamicStatItemProps> = ({
+  targetValue,
+  label,
+  formatFn = formatCompactNumber,
+  suffix = '',
+  prefix = '',
+}) => (
+  <div className="text-center">
+    <AnimatedCounter
+      targetValue={targetValue}
+      formatFn={formatFn}
+      suffix={suffix}
+      prefix={prefix}
+      className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block"
+    />
     <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
   </div>
 );
 
 // ─── Main App ─────────────────────────────────────────────────────────
+
+const StatsContent: React.FC = () => {
+  const { stats, loading, error } = useGitHubStats();
+
+  // Fallback display values when loading or on error
+  const displayDownloads = stats?.totalDownloads ?? 0;
+  const displayReleases = stats?.releaseCount ?? 0;
+
+  // Crash-free rate: we show 99% as a static claim (can't measure from GitHub)
+  // Performance multiplier: also a static claim
+  // These are architectural claims, not measurable metrics
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+        <StatItem value="..." label="Downloads" />
+        <StatItem value="..." label="Releases" />
+        <StatItem value="99%" label="Crash-free" />
+        <StatItem value="..." label="Versions" />
+      </div>
+    );
+  }
+
+  if (error) {
+    // Graceful fallback: show static reasonable values
+    return (
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+        <StatItem value={formatCompactNumber(displayDownloads)} label="Downloads" />
+        <StatItem value={displayReleases.toString()} label="Releases" />
+        <StatItem value="99%" label="Crash-free" />
+        <StatItem value="10x" label="Faster than web apps" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+      <DynamicStatItem
+        targetValue={displayDownloads}
+        label="Downloads"
+      />
+      <DynamicStatItem
+        targetValue={displayReleases}
+        label="Releases"
+      />
+      <StatItem value="99%" label="Crash-free" />
+      <StatItem value="10x" label="Faster than web apps" />
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <div className="bg-[#0a0a0a] min-h-screen relative">
@@ -349,12 +428,7 @@ const App: React.FC = () => {
           variants={staggerContainer}
         >
           <Glass className="rounded-2xl p-12 md:p-16">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-              <StatItem value="10k+" label="Downloads" delay={0} />
-              <StatItem value="99%" label="Crash-free" delay={0.1} />
-              <StatItem value="10x" label="Faster than web apps" delay={0.2} />
-              <StatItem value="500k+" label="Folders scanned" delay={0.3} />
-            </div>
+            <StatsContent />
           </Glass>
         </motion.div>
       </section>
