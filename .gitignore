@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Build output
+/dist
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+server.log
+server.*.log
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Package manager lockfiles (keep package.json, exclude lock)
+pnpm-lock.yaml
+yarn.lock
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Agents / skills (local tooling)
+.agents/
+.claude/
+
+# Skills lock
+skills-lock.json
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Testing
+/coverage
+
+# Vite
+vite.config.ts.timestamp-*
