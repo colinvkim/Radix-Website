@@ -51,3 +51,4 @@ skills-lock.json
 
 # Vite
 vite.config.ts.timestamp-*
+.vite/
