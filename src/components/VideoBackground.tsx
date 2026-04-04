@@ -10,6 +10,7 @@ interface VideoBackgroundProps {
   autoPlay?: boolean;
   playsInline?: boolean;
   style?: React.CSSProperties;
+  /** Vertical offset. When undefined, video fills container with `inset: 0`. */
   top?: string | number;
 }
 
@@ -22,7 +23,7 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
   autoPlay = true,
   playsInline = true,
   style,
-  top = '20%'
+  top,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -82,7 +83,15 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
       autoPlay={autoPlay}
       playsInline={playsInline}
       poster={poster}
-      style={{ position: 'absolute', top, objectFit: 'cover', ...style }}
+      style={{
+        position: 'absolute',
+        objectFit: 'cover',
+        backgroundColor: '#0a0a0a',
+        ...(top !== undefined
+          ? { top }
+          : { top: 0, left: 0, right: 0, bottom: 0 }),
+        ...style,
+      }}
     />
   );
 };

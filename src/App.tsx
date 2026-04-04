@@ -7,6 +7,7 @@ import { SectionBadge } from './components/SectionBadge';
 import { VideoBackground } from './components/VideoBackground';
 import { VideoFade } from './components/VideoFade';
 import { AnimatedCounter } from './components/AnimatedCounter';
+import { Header } from './components/Header';
 import { useGitHubStats, formatCompactNumber } from './hooks/useGitHubStats';
 
 // Inline GitHub icon — removed from lucide-react v1
@@ -196,6 +197,11 @@ const StatsContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div className="bg-[#0a0a0a] min-h-screen relative">
+
+      {/* ═══════════════════════════════════════════════════════════
+          HEADER
+          ═══════════════════════════════════════════════════════════ */}
+      <Header />
 
       {/* ═══════════════════════════════════════════════════════════
           HERO
@@ -436,15 +442,17 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           CTA FOOTER
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28 px-6 md:px-16 lg:px-24">
+      <section className="relative pt-28 pb-0 px-6 md:px-16 lg:px-24 bg-[#0a0a0a]">
         <div className="absolute inset-0 z-0">
-          <VideoBackground
-            src="https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8"
-            className="w-full h-full"
-          />
-          <div className="absolute inset-0 bg-black/50 z-0" />
+          <div className="absolute inset-0 overflow-hidden">
+            <VideoBackground
+              src="https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8"
+              className="w-full h-full"
+            />
+          </div>
+          <div className="absolute inset-0 bg-black/60 z-0" />
           <VideoFade position="top" />
-          <VideoFade position="bottom" />
+          <div className="absolute bottom-0 left-0 right-0 z-[1]" style={{ height: '120px', background: 'linear-gradient(to top, #0a0a0a 0%, transparent 100%)' }} aria-hidden="true" />
         </div>
 
         <motion.div
@@ -469,7 +477,8 @@ const App: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        <div className="relative z-10 mt-32 pt-8 px-4 md:px-8 lg:px-12">
+        {/* Footer */}
+        <div className="relative z-10 px-4 md:px-8 lg:px-12 py-16">
           <div className="section-divider mb-8" />
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-[#6b6560] text-sm">© {new Date().getFullYear()} Radix</p>
