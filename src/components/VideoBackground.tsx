@@ -36,12 +36,19 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
       return Boolean(video.canPlayType('application/vnd.apple.mpegurl'));
     };
 
+    let hls: Hls | null = null;
+
     if (isHlsSupported()) {
       // Use native HLS in Safari
       video.src = src;
+      if (autoPlay) {
+        video.play().catch(() => {
+          // Autoplay was prevented
+        });
+      }
     } else if (Hls.isSupported()) {
       // Use hls.js for other browsers
-      const hls = new Hls();
+      hls = new Hls();
       hlsRef.current = hls;
       hls.loadSource(src);
       hls.attachMedia(video);
@@ -53,16 +60,16 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
           });
         }
       });
-
-      return () => {
-        hls.destroy();
-      };
+    } else {
+      // Fallback: neither native HLS nor hls.js is supported
+      console.warn('HLS is not supported in this browser');
     }
 
     return () => {
-      if (hlsRef.current) {
-        hlsRef.current.destroy();
+      if (hls) {
+        hls.destroy();
       }
+      hlsRef.current = null;
     };
   }, [src, autoPlay]);
 

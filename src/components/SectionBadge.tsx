@@ -8,7 +8,7 @@ interface SectionBadgeProps {
 export const SectionBadge: React.FC<SectionBadgeProps> = ({ children }) => {
   return (
     <LiquidGlassContainer
-      className="inline-block px-3.5 py-1 text-xs font-medium text-white font-body mb-4"
+      className="inline-block px-4 py-1.5 text-[11px] font-semibold tracking-[0.15em] uppercase text-[#a09888] font-body mb-6"
       rounded="full"
     >
       {children}

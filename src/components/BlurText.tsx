@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 
 interface BlurTextProps {
   text: string;
@@ -24,14 +24,16 @@ export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 0 }
       { threshold: 0.1 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    const element = containerRef.current;
+    if (element) {
+      observer.observe(element);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (element) {
+        observer.unobserve(element);
       }
+      observer.disconnect();
     };
   }, []);
 
@@ -42,24 +44,23 @@ export const BlurText: React.FC<BlurTextProps> = ({ text, className, delay = 0 }
       {words.map((word, wordIndex) => (
         <motion.span
           key={wordIndex}
-          initial={{ opacity: 0, filter: 'blur(10px)', y: 50 }}
+          initial={{ opacity: 0, filter: 'blur(10px)', y: 30 }}
           animate={visible ? {
             opacity: 1,
-            filter: ['blur(10px)', 'blur(5px)', 'blur(0px)'],
-            y: [50, -5, 0]
+            filter: ['blur(10px)', 'blur(4px)', 'blur(0px)'],
+            y: [30, -4, 0]
           } : {}}
           transition={{
-            duration: 0.35,
-            delay: delay + wordIndex * 0.1,
-            ease: 'easeOut',
+            duration: 0.4,
+            delay: delay + wordIndex * 0.08,
+            ease: [0.25, 0.46, 0.45, 0.94],
           }}
-          className="inline-block mr-2"
+          className="inline-block mr-[0.25em]"
           aria-hidden="true"
         >
           {word}
         </motion.span>
       ))}
-      {/* Hidden text for accessibility */}
       <span className="sr-only">{text}</span>
     </div>
   );

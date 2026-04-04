@@ -15,6 +15,7 @@ export const VideoFade: React.FC<VideoFadeProps> = ({ position = 'bottom' }) => 
     <div
       className={`absolute ${position}-0 left-0 right-0 z-[1]`}
       style={{ height: '200px', ...gradientStyle }}
+      aria-hidden="true"
     />
   );
 };
