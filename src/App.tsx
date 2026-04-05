@@ -15,9 +15,7 @@ import { Glass } from "./components/Glass";
 import { SectionBadge } from "./components/SectionBadge";
 import { VideoBackground } from "./components/VideoBackground";
 import { VideoFade } from "./components/VideoFade";
-import { AnimatedCounter } from "./components/AnimatedCounter";
 import { Header } from "./components/Header";
-import { useGitHubStats, formatCompactNumber } from "./hooks/useGitHubStats";
 
 // Inline GitHub icon — removed from lucide-react v1
 const GithubIcon = (props: { className?: string }) => (
@@ -149,35 +147,8 @@ const StatItem: React.FC<StatItemProps> = ({ value, label }) => (
   <div className="text-center">
     <BlurText
       text={value}
-      className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block"
+      className="block w-full text-center text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb]"
       delay={0}
-    />
-    <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
-  </div>
-);
-
-interface DynamicStatItemProps {
-  targetValue: number;
-  label: string;
-  formatFn?: (value: number) => string;
-  suffix?: string;
-  prefix?: string;
-}
-
-const DynamicStatItem: React.FC<DynamicStatItemProps> = ({
-  targetValue,
-  label,
-  formatFn = formatCompactNumber,
-  suffix = "",
-  prefix = "",
-}) => (
-  <div className="text-center">
-    <AnimatedCounter
-      targetValue={targetValue}
-      formatFn={formatFn}
-      suffix={suffix}
-      prefix={prefix}
-      className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block"
     />
     <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
   </div>
@@ -186,48 +157,12 @@ const DynamicStatItem: React.FC<DynamicStatItemProps> = ({
 // ─── Main App ─────────────────────────────────────────────────────────
 
 const StatsContent: React.FC = () => {
-  const { stats, loading, error } = useGitHubStats();
-
-  // Fallback display values when loading or on error
-  const displayDownloads = stats?.totalDownloads ?? 0;
-  const displayReleases = stats?.releaseCount ?? 0;
-
-  // Crash-free rate: we show 99% as a static claim (can't measure from GitHub)
-  // Performance multiplier: also a static claim
-  // These are architectural claims, not measurable metrics
-
-  if (loading) {
-    return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-        <StatItem value="..." label="Downloads" />
-        <StatItem value="..." label="Releases" />
-        <StatItem value="99%" label="Crash-free" />
-        <StatItem value="..." label="Versions" />
-      </div>
-    );
-  }
-
-  if (error) {
-    // Graceful fallback: show static reasonable values
-    return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-        <StatItem
-          value={formatCompactNumber(displayDownloads)}
-          label="Downloads"
-        />
-        <StatItem value={displayReleases.toString()} label="Releases" />
-        <StatItem value="99%" label="Crash-free" />
-        <StatItem value="10x" label="Faster than web apps" />
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-      <DynamicStatItem targetValue={displayDownloads} label="Downloads" />
-      <DynamicStatItem targetValue={displayReleases} label="Releases" />
-      <StatItem value="99%" label="Crash-free" />
-      <StatItem value="10x" label="Faster than web apps" />
+      <StatItem value="On-device" label="Processing stays on your Mac" />
+      <StatItem value="No account" label="Nothing to sign into" />
+      <StatItem value="Large libraries" label="Built for deep folder trees" />
+      <StatItem value="No telemetry" label="Nothing gets collected" />
     </div>
   );
 };
