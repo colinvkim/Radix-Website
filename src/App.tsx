@@ -1,18 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Zap, Palette, BarChart3, Shield, Download, ChevronRight, X } from 'lucide-react';
-import { BlurText } from './components/BlurText';
-import { Glass } from './components/Glass';
-import { SectionBadge } from './components/SectionBadge';
-import { VideoBackground } from './components/VideoBackground';
-import { VideoFade } from './components/VideoFade';
-import { AnimatedCounter } from './components/AnimatedCounter';
-import { Header } from './components/Header';
-import { useGitHubStats, formatCompactNumber } from './hooks/useGitHubStats';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowUpRight,
+  Zap,
+  Palette,
+  BarChart3,
+  Shield,
+  Download,
+  ChevronRight,
+  X,
+} from "lucide-react";
+import { BlurText } from "./components/BlurText";
+import { Glass } from "./components/Glass";
+import { SectionBadge } from "./components/SectionBadge";
+import { VideoBackground } from "./components/VideoBackground";
+import { VideoFade } from "./components/VideoFade";
+import { AnimatedCounter } from "./components/AnimatedCounter";
+import { Header } from "./components/Header";
+import { useGitHubStats, formatCompactNumber } from "./hooks/useGitHubStats";
 
 // Inline GitHub icon — removed from lucide-react v1
 const GithubIcon = (props: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
@@ -26,14 +44,15 @@ declare global {
 
 // ─── Helpers ──────────────────────────────────────────────────────────
 const trackClick = (label: string) => {
-  window.gtag?.('event', 'download_click', {
-    event_category: 'CTA',
+  window.gtag?.("event", "download_click", {
+    event_category: "CTA",
     event_label: label,
   });
 };
 
-const DOWNLOAD_URL = 'https://github.com/colinvkim/Radix/releases/latest/download/Radix.zip';
-const GITHUB_URL = 'https://github.com/colinvkim/Radix';
+const DOWNLOAD_URL =
+  "https://github.com/colinvkim/Radix/releases/latest/download/Radix.zip";
+const GITHUB_URL = "https://github.com/colinvkim/Radix";
 
 // ─── Animation Variants ───────────────────────────────────────────────
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
@@ -45,7 +64,10 @@ const fadeInUp = {
 
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
 };
 
 const cardHover = {
@@ -63,11 +85,17 @@ interface GlassButtonProps {
   trackLabel?: string;
 }
 
-const GlassButton: React.FC<GlassButtonProps> = ({ href, children, className = '', fullWidth, trackLabel }) => (
+const GlassButton: React.FC<GlassButtonProps> = ({
+  href,
+  children,
+  className = "",
+  fullWidth,
+  trackLabel,
+}) => (
   <Glass
     variant="strong"
     rounded="rounded-lg"
-    className={`px-8 py-4 glow-button text-center ${fullWidth ? 'w-full sm:w-auto' : ''} ${className}`}
+    className={`px-8 py-4 glow-button text-center ${fullWidth ? "w-full sm:w-auto" : ""} ${className}`}
   >
     <a
       href={href}
@@ -87,8 +115,17 @@ interface FeatureCardProps {
   description: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => (
-  <motion.div variants={fadeInUp} whileHover="hover" initial="rest" animate="rest">
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon,
+  title,
+  description,
+}) => (
+  <motion.div
+    variants={fadeInUp}
+    whileHover="hover"
+    initial="rest"
+    animate="rest"
+  >
     <motion.div variants={cardHover}>
       <Glass className="p-8 group h-full flex flex-col">
         <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 group-hover:border-amber-500/40 group-hover:shadow-[0_0_24px_rgba(212,160,84,0.12)] transition-all duration-300">
@@ -110,7 +147,11 @@ interface StatItemProps {
 
 const StatItem: React.FC<StatItemProps> = ({ value, label }) => (
   <div className="text-center">
-    <BlurText text={value} className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block" delay={0} />
+    <BlurText
+      text={value}
+      className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] inline-block"
+      delay={0}
+    />
     <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
   </div>
 );
@@ -127,8 +168,8 @@ const DynamicStatItem: React.FC<DynamicStatItemProps> = ({
   targetValue,
   label,
   formatFn = formatCompactNumber,
-  suffix = '',
-  prefix = '',
+  suffix = "",
+  prefix = "",
 }) => (
   <div className="text-center">
     <AnimatedCounter
@@ -170,7 +211,10 @@ const StatsContent: React.FC = () => {
     // Graceful fallback: show static reasonable values
     return (
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-        <StatItem value={formatCompactNumber(displayDownloads)} label="Downloads" />
+        <StatItem
+          value={formatCompactNumber(displayDownloads)}
+          label="Downloads"
+        />
         <StatItem value={displayReleases.toString()} label="Releases" />
         <StatItem value="99%" label="Crash-free" />
         <StatItem value="10x" label="Faster than web apps" />
@@ -180,14 +224,8 @@ const StatsContent: React.FC = () => {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-      <DynamicStatItem
-        targetValue={displayDownloads}
-        label="Downloads"
-      />
-      <DynamicStatItem
-        targetValue={displayReleases}
-        label="Releases"
-      />
+      <DynamicStatItem targetValue={displayDownloads} label="Downloads" />
+      <DynamicStatItem targetValue={displayReleases} label="Releases" />
       <StatItem value="99%" label="Crash-free" />
       <StatItem value="10x" label="Faster than web apps" />
     </div>
@@ -202,16 +240,20 @@ interface ScreenshotModalProps {
   onClose: () => void;
 }
 
-const ScreenshotModal: React.FC<ScreenshotModalProps> = ({ src, alt, onClose }) => {
+const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
+  src,
+  alt,
+  onClose,
+}) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    document.addEventListener('keydown', handleEsc);
-    document.body.style.overflow = 'hidden';
+    document.addEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "";
     };
   }, [onClose]);
 
@@ -253,30 +295,32 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({ src, alt, onClose }) 
 };
 
 const App: React.FC = () => {
-  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
+  const [modalImage, setModalImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
 
   const features = [
     {
-      number: '01',
-      title: 'Interactive Sunburst Visualization',
+      number: "01",
+      title: "Interactive Sunburst Visualization",
       description:
-        'Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what\'s consuming your space.',
-      cta: 'Preview',
-      image: '/images/feature-sunburst.png',
+        "Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what's consuming your space.",
+      cta: "Preview",
+      image: "/images/feature-sunburst.png",
     },
     {
-      number: '02',
-      title: 'Lightning-Fast Scanning Engine',
+      number: "02",
+      title: "Lightning-Fast Scanning Engine",
       description:
-        'Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what\'s happening.',
-      cta: 'Preview',
-      image: '/images/feature-scan.png',
+        "Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what's happening.",
+      cta: "Preview",
+      image: "/images/feature-scan.png",
     },
   ];
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen relative">
-
       {/* ═══════════════════════════════════════════════════════════
           HEADER
           ═══════════════════════════════════════════════════════════ */}
@@ -322,13 +366,13 @@ const App: React.FC = () => {
 
           <motion.p
             className="max-w-2xl mx-auto text-center text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-12"
-            initial={{ opacity: 0, filter: 'blur(5px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, filter: "blur(5px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            Radix is a native macOS disk space analyzer that scans millions of files in seconds
-            and visualizes results through an interactive sunburst chart. Built in Swift/SwiftUI
-            for blazing performance.
+            Radix is a native macOS disk space analyzer that scans millions of
+            files in seconds and visualizes results through an interactive
+            sunburst chart. Built in Swift/SwiftUI for blazing performance.
           </motion.p>
 
           <motion.div
@@ -383,14 +427,22 @@ const App: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={staggerContainer}
         >
-          <motion.div variants={fadeInUp}><SectionBadge>How It Works</SectionBadge></motion.div>
-          <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] mb-6 leading-[1]">
+          <motion.div variants={fadeInUp}>
+            <SectionBadge>How It Works</SectionBadge>
+          </motion.div>
+          <motion.h2
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] mb-6 leading-[1]"
+          >
             Scan, Visualize, Discover
           </motion.h2>
-          <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-center text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10">
-            Drag and drop any folder to instantly see a beautiful sunburst visualization of your
-            disk space. Click any segment to drill down and explore your files with unprecedented
-            clarity.
+          <motion.p
+            variants={fadeInUp}
+            className="max-w-2xl mx-auto text-center text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10"
+          >
+            Drag and drop any folder to instantly see a beautiful sunburst
+            visualization of your disk space. Click any segment to drill down
+            and explore your files with unprecedented clarity.
           </motion.p>
           <motion.div variants={fadeInUp}>
             <GlassButton href={DOWNLOAD_URL} trackLabel="How It Works">
@@ -414,9 +466,9 @@ const App: React.FC = () => {
           {features.map((feature, i) => (
             <div
               key={feature.number}
-              className={`flex flex-col lg:flex-row items-center gap-16 ${i === 0 ? 'mb-28' : ''}`}
+              className={`flex flex-col lg:flex-row items-center gap-16 ${i === 0 ? "mb-28" : ""}`}
             >
-              <div className={`flex-1 ${i === 1 ? 'lg:order-1' : ''}`}>
+              <div className={`flex-1 ${i === 1 ? "lg:order-1" : ""}`}>
                 <span className="text-[#d4a054] font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4 block">
                   {feature.number}
                 </span>
@@ -426,17 +478,23 @@ const App: React.FC = () => {
                 <p className="text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-8 max-w-lg">
                   {feature.description}
                 </p>
-                <Glass variant="strong" rounded="rounded-lg" className="px-6 py-2.5 inline-block glow-button">
+                <Glass
+                  variant="strong"
+                  rounded="rounded-lg"
+                  className="px-6 py-2.5 inline-block glow-button"
+                >
                   <button
                     className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]"
-                    onClick={() => setModalImage({ src: feature.image, alt: feature.title })}
+                    onClick={() =>
+                      setModalImage({ src: feature.image, alt: feature.title })
+                    }
                   >
                     {feature.cta}
                     <ChevronRight className="w-4 h-4 text-[#d4a054]" />
                   </button>
                 </Glass>
               </div>
-              <div className={`flex-1 ${i === 1 ? 'lg:order-0' : ''}`}>
+              <div className={`flex-1 ${i === 1 ? "lg:order-0" : ""}`}>
                 <Glass className="rounded-2xl p-2 overflow-hidden h-[400px]">
                   <img
                     src={feature.image}
@@ -467,16 +525,37 @@ const App: React.FC = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
         >
-          <motion.div variants={fadeInUp}><SectionBadge>Why Radix</SectionBadge></motion.div>
-          <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] mb-16 leading-[1]">
+          <motion.div variants={fadeInUp}>
+            <SectionBadge>Why Radix</SectionBadge>
+          </motion.div>
+          <motion.h2
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] mb-16 leading-[1]"
+          >
             The difference is everything.
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            <FeatureCard icon={<Zap className="w-6 h-6 text-[#d4a054]" />} title="Sunburst Visualization" description="Explore your disk with an interactive circular chart. Click any segment to drill down into nested directories." />
-            <FeatureCard icon={<Palette className="w-6 h-6 text-[#d4a054]" />} title="Sort & Filter" description="Sort files by size, name, or date. Filter by file type to quickly find what's taking up space." />
-            <FeatureCard icon={<BarChart3 className="w-6 h-6 text-[#d4a054]" />} title="Drop to Scan" description="Drag and drop any folder to instantly scan. See real-time progress as Radix traverses your files." />
-            <FeatureCard icon={<Shield className="w-6 h-6 text-[#d4a054]" />} title="Privacy-First" description="Everything runs locally on your Mac. No data collection, no telemetry, no account required." />
+            <FeatureCard
+              icon={<Zap className="w-6 h-6 text-[#d4a054]" />}
+              title="Sunburst Visualization"
+              description="Explore your disk with an interactive circular chart. Click any segment to drill down into nested directories."
+            />
+            <FeatureCard
+              icon={<Palette className="w-6 h-6 text-[#d4a054]" />}
+              title="Sort & Filter"
+              description="Sort files by size, name, or date. Filter by file type to quickly find what's taking up space."
+            />
+            <FeatureCard
+              icon={<BarChart3 className="w-6 h-6 text-[#d4a054]" />}
+              title="Drop to Scan"
+              description="Drag and drop any folder to instantly scan. See real-time progress as Radix traverses your files."
+            />
+            <FeatureCard
+              icon={<Shield className="w-6 h-6 text-[#d4a054]" />}
+              title="Privacy-First"
+              description="Everything runs locally on your Mac. No data collection, no telemetry, no account required."
+            />
           </div>
         </motion.div>
       </section>
@@ -489,7 +568,7 @@ const App: React.FC = () => {
           <VideoBackground
             src="https://stream.mux.com/NcU3HlHeF7CUL86azTTzpy3Tlb00d6iF3BmCdFslMJYM.m3u8"
             className="w-full h-full"
-            style={{ filter: 'saturate(0)' }}
+            style={{ filter: "saturate(0)" }}
           />
           <div className="absolute inset-0 bg-black/60 z-0" />
           <VideoFade position="top" />
@@ -522,7 +601,15 @@ const App: React.FC = () => {
           </div>
           <div className="absolute inset-0 bg-black/60 z-0" />
           <VideoFade position="top" />
-          <div className="absolute bottom-0 left-0 right-0 z-[1]" style={{ height: '120px', background: 'linear-gradient(to top, #0a0a0a 0%, transparent 100%)' }} aria-hidden="true" />
+          <div
+            className="absolute bottom-0 left-0 right-0 z-[1]"
+            style={{
+              height: "120px",
+              background:
+                "linear-gradient(to top, #0a0a0a 0%, transparent 100%)",
+            }}
+            aria-hidden="true"
+          />
         </div>
 
         <motion.div
@@ -533,10 +620,17 @@ const App: React.FC = () => {
           variants={staggerContainer}
         >
           <motion.div variants={fadeInUp}>
-            <BlurText text="See what Radix can find." className="text-5xl md:text-6xl lg:text-7xl font-display text-[#f5f0eb] text-center mb-8 leading-[1]" />
+            <BlurText
+              text="See what Radix can find."
+              className="text-5xl md:text-6xl lg:text-7xl font-display text-[#f5f0eb] text-center mb-8 leading-[1]"
+            />
           </motion.div>
-          <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10">
-            Download Radix today and reclaim your disk space. Open source and free forever.
+          <motion.p
+            variants={fadeInUp}
+            className="max-w-2xl mx-auto text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10"
+          >
+            Download Radix today and reclaim your disk space. Open source and
+            free forever.
           </motion.p>
           <motion.div variants={fadeInUp}>
             <GlassButton href={DOWNLOAD_URL} trackLabel="Footer Download">
@@ -551,12 +645,16 @@ const App: React.FC = () => {
         <div className="relative z-10 px-4 md:px-8 lg:px-12 py-16">
           <div className="section-divider mb-8" />
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[#6b6560] text-sm">© {new Date().getFullYear()} Radix</p>
+            <p className="text-[#6b6560] text-sm">
+              © {new Date().getFullYear()} Colin Kim
+            </p>
             <div className="flex items-center gap-8">
-              <a href="#" className="text-[#6b6560] text-sm hover:text-[#d4a054] transition-colors">Privacy</a>
-              <a href="#" className="text-[#6b6560] text-sm hover:text-[#d4a054] transition-colors">Terms</a>
-              <a href="#" className="text-[#6b6560] text-sm hover:text-[#d4a054] transition-colors">Contact</a>
-              <a href={GITHUB_URL} className="flex items-center gap-1.5 text-[#6b6560] text-sm hover:text-[#d4a054] transition-colors" target="_blank" rel="noopener noreferrer">
+              <a
+                href={GITHUB_URL}
+                className="flex items-center gap-1.5 text-[#6b6560] text-sm hover:text-[#d4a054] transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>GitHub</span>
               </a>
