@@ -119,12 +119,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   description,
 }) => (
   <motion.div
+    className="h-full"
     variants={fadeInUp}
     whileHover="hover"
     initial="rest"
     animate="rest"
   >
-    <motion.div variants={cardHover}>
+    <motion.div className="h-full" variants={cardHover}>
       <Glass className="p-8 group h-full flex flex-col">
         <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 group-hover:border-amber-500/40 group-hover:shadow-[0_0_24px_rgba(212,160,84,0.12)] transition-all duration-300">
           {icon}
@@ -470,7 +471,7 @@ const App: React.FC = () => {
             The difference is everything.
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
             <FeatureCard
               icon={<Zap className="w-6 h-6 text-[#d4a054]" />}
               title="Sunburst Visualization"
