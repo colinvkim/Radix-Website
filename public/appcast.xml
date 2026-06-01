@@ -3,6 +3,14 @@
     <channel>
         <title>Radix</title>
         <item>
+            <title>1.1.1</title>
+            <pubDate>Sun, 31 May 2026 17:22:50 -0700</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.1.1/Radix.zip" sparkle:edSignature="Sige6HQPW6WnQV7fIe1tWT2sDX9qPdyKT+WhlQCgawIg9tbcYhyxXAhXY6mMTiVhnk++k2911s0fQ9Wq4eibAQ==" length="3574280" type="application/octet-stream"/>
+</item>
+        <item>
             <title>1.1.0</title>
             <pubDate>Wed, 27 May 2026 15:22:47 -0700</pubDate>
             <sparkle:version>2</sparkle:version>
