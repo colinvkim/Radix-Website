@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Hls from 'hls.js';
+import type Hls from 'hls.js';
 
 interface VideoBackgroundProps {
   src: string;
@@ -37,6 +37,7 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
     };
 
     let hls: Hls | null = null;
+    let cancelled = false;
 
     const playIfNeeded = () => {
       if (!autoPlay) return;
@@ -51,16 +52,28 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
     } else if (canPlayHlsNatively()) {
       video.src = src;
       playIfNeeded();
-    } else if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, playIfNeeded);
     } else {
-      console.warn('HLS is not supported in this browser');
+      void import('hls.js')
+        .then(({ default: Hls }) => {
+          if (cancelled) return;
+
+          if (!Hls.isSupported()) {
+            console.warn('HLS is not supported in this browser');
+            return;
+          }
+
+          hls = new Hls();
+          hls.loadSource(src);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, playIfNeeded);
+        })
+        .catch(() => {
+          console.warn('Failed to load HLS support');
+        });
     }
 
     return () => {
+      cancelled = true;
       if (hls) {
         hls.destroy();
       }
