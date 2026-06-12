@@ -286,6 +286,7 @@ const App: React.FC = () => {
           </motion.div>
 
           <BlurText
+            as="h1"
             text="Your Mac's Disk Space, Beautifully Visualized"
             className="text-5xl md:text-6xl lg:text-[4.5rem] font-display italic text-[#f5f0eb] leading-[0.8] tracking-[-4px] text-center mb-8"
             delay={0.3}

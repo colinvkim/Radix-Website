@@ -5,14 +5,16 @@ interface BlurTextProps {
   text: string;
   className?: string;
   delay?: number;
+  as?: "div" | "h1";
 }
 
 export const BlurText: React.FC<BlurTextProps> = ({
   text,
   className,
   delay = 0,
+  as = "div",
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -42,9 +44,8 @@ export const BlurText: React.FC<BlurTextProps> = ({
   }, []);
 
   const words = text.split(" ");
-
-  return (
-    <div ref={containerRef} className={`w-full ${className ?? ""}`}>
+  const content = (
+    <>
       <span className="flex w-full flex-wrap justify-center gap-x-[0.25em] text-center">
         {words.map((word, wordIndex) => (
           <motion.span
@@ -68,10 +69,34 @@ export const BlurText: React.FC<BlurTextProps> = ({
             aria-hidden="true"
           >
             {word}
+            {wordIndex < words.length - 1 ? " " : ""}
           </motion.span>
         ))}
       </span>
-      <span className="sr-only">{text}</span>
+      {as === "div" && <span className="sr-only">{text}</span>}
+    </>
+  );
+
+  const containerClassName = `w-full ${className ?? ""}`;
+
+  if (as === "h1") {
+    return (
+      <h1
+        ref={containerRef as React.Ref<HTMLHeadingElement>}
+        className={containerClassName}
+        aria-label={text}
+      >
+        {content}
+      </h1>
+    );
+  }
+
+  return (
+    <div
+      ref={containerRef as React.Ref<HTMLDivElement>}
+      className={containerClassName}
+    >
+      {content}
     </div>
   );
 };
