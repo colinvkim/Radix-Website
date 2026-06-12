@@ -188,39 +188,37 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
   }, [onClose]);
 
   return (
-    <AnimatePresence>
+    <motion.div
+      key="backdrop"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
       <motion.div
-        key="backdrop"
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
+        key="modal"
+        className="relative max-w-5xl w-full"
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25, ease: EASE }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          key="modal"
-          className="relative max-w-5xl w-full"
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.25, ease: EASE }}
-          onClick={(e) => e.stopPropagation()}
+        <button
+          onClick={onClose}
+          className="absolute -top-12 right-0 text-[#a09888] hover:text-[#f5f0eb] transition-colors"
+          aria-label="Close preview"
         >
-          <button
-            onClick={onClose}
-            className="absolute -top-12 right-0 text-[#a09888] hover:text-[#f5f0eb] transition-colors"
-            aria-label="Close preview"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          <img
-            src={src}
-            alt={alt}
-            className="w-full h-auto rounded-2xl shadow-2xl"
-          />
-        </motion.div>
+          <X className="w-6 h-6" />
+        </button>
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto rounded-2xl shadow-2xl"
+        />
       </motion.div>
-    </AnimatePresence>
+    </motion.div>
   );
 };
 
@@ -263,7 +261,6 @@ const App: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <VideoBackground
             src="/videos/hero.mp4"
-            poster="/images/hero_bg.jpeg"
             top="20%"
             className="w-full h-auto"
           />
@@ -583,13 +580,15 @@ const App: React.FC = () => {
       </section>
 
       {/* Screenshot Modal */}
-      {modalImage && (
-        <ScreenshotModal
-          src={modalImage.src}
-          alt={modalImage.alt}
-          onClose={() => setModalImage(null)}
-        />
-      )}
+      <AnimatePresence>
+        {modalImage && (
+          <ScreenshotModal
+            src={modalImage.src}
+            alt={modalImage.alt}
+            onClose={() => setModalImage(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
