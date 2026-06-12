@@ -26,43 +26,37 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
   top,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const hlsRef = useRef<Hls | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Test if the browser supports HLS natively (Safari)
-    const isHlsSupported = () => {
+    const isHlsSource = /\.m3u8(?:$|\?)/i.test(src);
+    const canPlayHlsNatively = () => {
       return Boolean(video.canPlayType('application/vnd.apple.mpegurl'));
     };
 
     let hls: Hls | null = null;
 
-    if (isHlsSupported()) {
-      // Use native HLS in Safari
+    const playIfNeeded = () => {
+      if (!autoPlay) return;
+      video.play().catch(() => {
+        // Autoplay was prevented
+      });
+    };
+
+    if (!isHlsSource) {
       video.src = src;
-      if (autoPlay) {
-        video.play().catch(() => {
-          // Autoplay was prevented
-        });
-      }
+      playIfNeeded();
+    } else if (canPlayHlsNatively()) {
+      video.src = src;
+      playIfNeeded();
     } else if (Hls.isSupported()) {
-      // Use hls.js for other browsers
       hls = new Hls();
-      hlsRef.current = hls;
       hls.loadSource(src);
       hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        if (autoPlay) {
-          video.play().catch(() => {
-            // Autoplay was prevented
-          });
-        }
-      });
+      hls.on(Hls.Events.MANIFEST_PARSED, playIfNeeded);
     } else {
-      // Fallback: neither native HLS nor hls.js is supported
       console.warn('HLS is not supported in this browser');
     }
 
@@ -70,7 +64,6 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
       if (hls) {
         hls.destroy();
       }
-      hlsRef.current = null;
     };
   }, [src, autoPlay]);
 

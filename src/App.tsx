@@ -90,21 +90,15 @@ const GlassButton: React.FC<GlassButtonProps> = ({
   fullWidth,
   trackLabel,
 }) => (
-  <Glass
-    variant="strong"
-    rounded="rounded-lg"
-    className={`px-8 py-4 glow-button text-center ${fullWidth ? "w-full sm:w-auto" : ""} ${className}`}
+  <a
+    href={href}
+    className={`liquid-glass-strong rounded-lg glow-button px-8 py-4 items-center justify-center gap-2.5 text-center text-[15px] font-semibold text-[#f5f0eb] tracking-wide ${fullWidth ? "flex w-full sm:inline-flex sm:w-auto" : "inline-flex"} ${className}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={() => trackLabel && trackClick(trackLabel)}
   >
-    <a
-      href={href}
-      className="flex items-center justify-center gap-2.5 text-[15px] font-semibold text-[#f5f0eb] tracking-wide"
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => trackLabel && trackClick(trackLabel)}
-    >
-      {children}
-    </a>
-  </Glass>
+    {children}
+  </a>
 );
 
 interface FeatureCardProps {
@@ -322,22 +316,16 @@ const App: React.FC = () => {
               Download Radix
             </GlassButton>
 
-            <Glass
-              variant="strong"
-              rounded="rounded-lg"
-              className="px-8 py-4 w-full sm:w-auto text-center opacity-60 hover:opacity-100 transition-opacity duration-300"
+            <a
+              href={GITHUB_URL}
+              className="liquid-glass-strong rounded-lg inline-flex w-full items-center justify-center gap-2 px-8 py-4 text-center text-[15px] font-medium text-[#f5f0eb] tracking-wide opacity-60 transition-opacity duration-300 hover:opacity-100 sm:w-auto"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Radix on GitHub"
             >
-              <a
-                href={GITHUB_URL}
-                className="flex items-center justify-center gap-2 text-[15px] font-medium text-[#f5f0eb] tracking-wide"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View Radix on GitHub"
-              >
-                <GithubIcon className="w-5 h-5" />
-                View on GitHub
-              </a>
-            </Glass>
+              <GithubIcon className="w-5 h-5" />
+              View on GitHub
+            </a>
           </motion.div>
         </div>
       </section>
@@ -414,21 +402,16 @@ const App: React.FC = () => {
                 <p className="text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-8 max-w-lg">
                   {feature.description}
                 </p>
-                <Glass
-                  variant="strong"
-                  rounded="rounded-lg"
-                  className="px-6 py-2.5 inline-block glow-button"
+                <button
+                  type="button"
+                  className="liquid-glass-strong rounded-lg glow-button inline-flex cursor-pointer items-center gap-2 px-6 py-2.5 text-sm font-medium text-[#f5f0eb]"
+                  onClick={() =>
+                    setModalImage({ src: feature.image, alt: feature.title })
+                  }
                 >
-                  <button
-                    className="flex items-center gap-2 text-sm font-medium text-[#f5f0eb]"
-                    onClick={() =>
-                      setModalImage({ src: feature.image, alt: feature.title })
-                    }
-                  >
-                    {feature.cta}
-                    <ChevronRight className="w-4 h-4 text-[#d4a054]" />
-                  </button>
-                </Glass>
+                  {feature.cta}
+                  <ChevronRight className="w-4 h-4 text-[#d4a054]" />
+                </button>
               </div>
               <div className={`flex-1 ${i === 1 ? "lg:order-0" : ""}`}>
                 <Glass className="rounded-2xl p-2 overflow-hidden h-[400px]">
