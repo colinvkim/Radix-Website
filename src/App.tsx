@@ -304,26 +304,32 @@ const App: React.FC = () => {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row items-center gap-4"
+            className="flex flex-col items-center gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}
           >
-            <GlassButton href={DOWNLOAD_URL} trackLabel="Hero Download">
-              <Download className="w-5 h-5 text-[#d4a054]" />
-              Download Radix
-            </GlassButton>
+            <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
+              <GlassButton href={DOWNLOAD_URL} trackLabel="Hero Download">
+                <Download className="w-5 h-5 text-[#d4a054]" />
+                Download Radix
+              </GlassButton>
 
-            <a
-              href={GITHUB_URL}
-              className="liquid-glass-strong rounded-lg inline-flex w-full items-center justify-center gap-2 px-8 py-4 text-center text-[15px] font-medium text-[#f5f0eb] tracking-wide opacity-60 transition-opacity duration-300 hover:opacity-100 sm:w-auto"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Radix on GitHub"
-            >
-              <GithubIcon className="w-5 h-5" />
-              View on GitHub
-            </a>
+              <a
+                href={GITHUB_URL}
+                className="liquid-glass-strong rounded-lg inline-flex w-full items-center justify-center gap-2 px-8 py-4 text-center text-[15px] font-medium text-[#f5f0eb] tracking-wide opacity-60 transition-opacity duration-300 hover:opacity-100 sm:w-auto"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View Radix on GitHub"
+              >
+                <GithubIcon className="w-5 h-5" />
+                View on GitHub
+              </a>
+            </div>
+
+            <p className="text-center font-body text-xs font-medium tracking-wide text-[#8f8779]">
+              Requires macOS 14 or later.
+            </p>
           </motion.div>
         </div>
       </section>
