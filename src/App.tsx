@@ -398,11 +398,9 @@ const App: React.FC = () => {
             and explore your files with unprecedented clarity.
           </motion.p>
           <motion.div variants={fadeInUp}>
-            <GlassButton href={DOWNLOAD_URL} trackLabel="How It Works">
+            <GlassButton href={DOWNLOAD_URL} trackLabel="How It Works" className="cta-pulse">
               Try Radix Now
-              <span className="cta-orbit-icon" aria-hidden="true">
-                <ArrowUpRight className="relative z-10 h-4 w-4 text-[#d4a054]" />
-              </span>
+              <ArrowUpRight className="h-4 w-4 text-[#d4a054]" />
             </GlassButton>
           </motion.div>
         </motion.div>

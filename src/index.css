@@ -150,6 +150,44 @@ body::before {
     opacity: 1;
   }
 
+  .cta-pulse::before {
+    background:
+      radial-gradient(circle, rgba(245, 240, 235, 0.95) 0%, rgba(255, 120, 104, 0.95) 26%, rgba(212, 100, 84, 0.5) 48%, transparent 72%) no-repeat,
+      rgba(212, 100, 84, 0.22);
+    background-position: 0% 100%, center;
+    background-size: 96px 96px, auto;
+    filter: drop-shadow(0 0 8px rgba(255, 120, 104, 0.45));
+    animation: cta-pulse-path 3s linear infinite;
+  }
+
+  @keyframes cta-pulse-path {
+    0% {
+      background-position: 0% 100%, center;
+    }
+
+    25% {
+      background-position: 0% 0%, center;
+    }
+
+    50% {
+      background-position: 100% 0%, center;
+    }
+
+    75% {
+      background-position: 100% 100%, center;
+    }
+
+    100% {
+      background-position: 0% 100%, center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-pulse::before {
+      animation: none;
+    }
+  }
+
   /* Section divider */
   .section-divider {
     height: 1px;
