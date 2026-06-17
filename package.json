@@ -10,20 +10,20 @@
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
-    "framer-motion": "^12.38.0",
-    "hls.js": "^1.6.15",
-    "lucide-react": "^1.7.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "framer-motion": "^12.40.0",
+    "hls.js": "^1.6.16",
+    "lucide-react": "^1.18.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.7.0",
-    "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^3.4.18",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3",
-    "vite": "^7.3.0"
+    "vite": "^7.3.5"
   }
 }
