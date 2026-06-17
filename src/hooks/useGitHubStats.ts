@@ -13,7 +13,13 @@ interface Release {
   [key: string]: unknown;
 }
 
+interface Repository {
+  stargazers_count: number;
+  [key: string]: unknown;
+}
+
 interface GitHubStats {
+  starCount: number;
   totalDownloads: number;
   latestVersion: string;
   releaseCount: number;
@@ -27,10 +33,11 @@ interface UseGitHubStatsResult {
 
 const REPO_OWNER = 'colinvkim';
 const REPO_NAME = 'Radix';
-const GITHUB_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`;
+const REPO_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+const RELEASES_API = `${REPO_API}/releases`;
 
 /**
- * Fetches real download stats from GitHub Releases API.
+ * Fetches real repo and download stats from GitHub API.
  * Sums download_count across all release assets.
  */
 export function useGitHubStats(): UseGitHubStatsResult {
@@ -43,18 +50,28 @@ export function useGitHubStats(): UseGitHubStatsResult {
 
     async function fetchStats() {
       try {
-        const response = await fetch(GITHUB_API, {
+        const requestOptions = {
           signal: abortController.signal,
           headers: {
             Accept: 'application/vnd.github+json',
           },
-        });
+        };
 
-        if (!response.ok) {
-          throw new Error(`GitHub API returned ${response.status}`);
+        const [repoResponse, releasesResponse] = await Promise.all([
+          fetch(REPO_API, requestOptions),
+          fetch(RELEASES_API, requestOptions),
+        ]);
+
+        if (!repoResponse.ok) {
+          throw new Error(`GitHub repo API returned ${repoResponse.status}`);
         }
 
-        const releases: Release[] = await response.json();
+        if (!releasesResponse.ok) {
+          throw new Error(`GitHub releases API returned ${releasesResponse.status}`);
+        }
+
+        const repository: Repository = await repoResponse.json();
+        const releases: Release[] = await releasesResponse.json();
 
         let totalDownloads = 0;
         for (const release of releases) {
@@ -65,6 +82,7 @@ export function useGitHubStats(): UseGitHubStatsResult {
 
         if (!abortController.signal.aborted) {
           setStats({
+            starCount: repository.stargazers_count,
             totalDownloads,
             latestVersion: releases[0]?.tag_name ?? 'unknown',
             releaseCount: releases.length,

@@ -8,6 +8,7 @@ import {
   Shield,
   Download,
   ChevronRight,
+  Star,
   X,
 } from "lucide-react";
 import { BlurText } from "./components/BlurText";
@@ -16,6 +17,7 @@ import { SectionBadge } from "./components/SectionBadge";
 import { VideoBackground } from "./components/VideoBackground";
 import { VideoFade } from "./components/VideoFade";
 import { Header } from "./components/Header";
+import { formatCompactNumber, useGitHubStats } from "./hooks/useGitHubStats";
 
 // Inline GitHub icon — removed from lucide-react v1
 const GithubIcon = (props: { className?: string }) => (
@@ -134,30 +136,53 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 );
 
 interface StatItemProps {
+  href: string;
+  icon: React.ReactNode;
   value: string;
   label: string;
 }
 
-const StatItem: React.FC<StatItemProps> = ({ value, label }) => (
-  <div className="text-center">
+const StatItem: React.FC<StatItemProps> = ({ href, icon, value, label }) => (
+  <a
+    href={href}
+    className="group liquid-glass rounded-xl p-8 text-center transition-all duration-300 hover:-translate-y-1"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/20 bg-amber-500/10 text-[#d4a054] transition-all duration-300 group-hover:border-amber-500/40 group-hover:bg-amber-500/15">
+      {icon}
+    </div>
     <BlurText
       text={value}
-      className="block w-full text-center text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb]"
+      className="block w-full text-center text-5xl md:text-6xl lg:text-7xl font-display text-[#f5f0eb]"
       delay={0}
     />
-    <p className="text-[#a09888] font-body font-light text-sm mt-2">{label}</p>
-  </div>
+    <p className="mt-3 text-sm font-medium tracking-[0.16em] text-[#a09888] uppercase">
+      {label}
+    </p>
+  </a>
 );
 
 // ─── Main App ─────────────────────────────────────────────────────────
 
 const StatsContent: React.FC = () => {
+  const { stats, loading } = useGitHubStats();
+  const loadingValue = loading ? "..." : "--";
+
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-      <StatItem value="On-device" label="Processing stays on your Mac" />
-      <StatItem value="No account" label="Nothing to sign into" />
-      <StatItem value="Large libraries" label="Built for deep folder trees" />
-      <StatItem value="No telemetry" label="Nothing gets collected" />
+    <div className="grid grid-cols-1 gap-5 text-center md:grid-cols-2 md:gap-6">
+      <StatItem
+        href={GITHUB_URL}
+        icon={<Star className="h-5 w-5" />}
+        value={stats ? formatCompactNumber(stats.starCount) : loadingValue}
+        label="GitHub stars"
+      />
+      <StatItem
+        href={`${GITHUB_URL}/releases`}
+        icon={<Download className="h-5 w-5" />}
+        value={stats ? formatCompactNumber(stats.totalDownloads) : loadingValue}
+        label="Release downloads"
+      />
     </div>
   );
 };
@@ -375,7 +400,9 @@ const App: React.FC = () => {
           <motion.div variants={fadeInUp}>
             <GlassButton href={DOWNLOAD_URL} trackLabel="How It Works">
               Try Radix Now
-              <ArrowUpRight className="w-4 h-4 text-[#d4a054]" />
+              <span className="cta-orbit-icon" aria-hidden="true">
+                <ArrowUpRight className="relative z-10 h-4 w-4 text-[#d4a054]" />
+              </span>
             </GlassButton>
           </motion.div>
         </motion.div>
@@ -499,15 +526,13 @@ const App: React.FC = () => {
         </div>
 
         <motion.div
-          className="relative z-10 max-w-5xl mx-auto"
+          className="relative z-10 max-w-4xl mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={staggerContainer}
         >
-          <Glass className="rounded-2xl p-12 md:p-16">
-            <StatsContent />
-          </Glass>
+          <StatsContent />
         </motion.div>
       </section>
 
