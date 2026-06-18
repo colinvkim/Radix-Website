@@ -7,6 +7,9 @@ import {
   BarChart3,
   Shield,
   Download,
+  Terminal,
+  Copy,
+  Check,
   ChevronRight,
   Star,
   X,
@@ -53,6 +56,7 @@ const trackClick = (label: string) => {
 const DOWNLOAD_URL =
   "https://github.com/colinvkim/Radix/releases/latest/download/Radix.zip";
 const GITHUB_URL = "https://github.com/colinvkim/Radix";
+const HOMEBREW_COMMAND = "brew install --cask radix";
 
 // ─── Animation Variants ───────────────────────────────────────────────
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
@@ -102,6 +106,70 @@ const GlassButton: React.FC<GlassButtonProps> = ({
     {children}
   </a>
 );
+
+interface HomebrewInstallProps {
+  trackLabel: string;
+}
+
+const HomebrewInstall: React.FC<HomebrewInstallProps> = ({ trackLabel }) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyWithFallback = async () => {
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(HOMEBREW_COMMAND);
+        return true;
+      } catch {
+        // Fall back for browsers that deny clipboard writes outside HTTPS.
+      }
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = HOMEBREW_COMMAND;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      return document.execCommand("copy");
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  };
+
+  const copyCommand = async () => {
+    if (await copyWithFallback()) {
+      setCopied(true);
+      trackClick(trackLabel);
+      window.setTimeout(() => setCopied(false), 1800);
+    } else {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <div className="liquid-glass-strong rounded-lg flex w-full max-w-[390px] items-center gap-3 px-4 py-3 text-left sm:w-auto">
+      <Terminal className="h-4 w-4 shrink-0 text-[#d4a054]" />
+      <code className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px] font-medium text-[#f5f0eb]">
+        {HOMEBREW_COMMAND}
+      </code>
+      <button
+        type="button"
+        className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/10 text-[#a09888] transition-colors hover:border-amber-500/40 hover:text-[#d4a054]"
+        onClick={copyCommand}
+        aria-label={copied ? "Homebrew command copied" : "Copy Homebrew command"}
+      >
+        {copied ? (
+          <Check className="h-3.5 w-3.5" />
+        ) : (
+          <Copy className="h-3.5 w-3.5" />
+        )}
+      </button>
+    </div>
+  );
+};
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -329,7 +397,7 @@ const App: React.FC = () => {
           </motion.p>
 
           <motion.div
-            className="flex flex-col items-center gap-4"
+            className="flex w-full flex-col items-center gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}
@@ -351,6 +419,8 @@ const App: React.FC = () => {
                 View on GitHub
               </a>
             </div>
+
+            <HomebrewInstall trackLabel="Hero Homebrew Copy" />
 
             <p className="text-center font-body text-xs font-medium tracking-wide text-[#8f8779]">
               Requires macOS 14 or later.
