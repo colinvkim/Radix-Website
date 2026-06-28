@@ -8,7 +8,7 @@
             <sparkle:version>6</sparkle:version>
             <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.3.0</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.3.0.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.3.0/Radix.zip" sparkle:edSignature="KF9MlzktqvkYewOmLw0JSrOENMReI7KwIf1QNKp38GjCzGeH7UVdykkSsKiXzGBuZlxQv8M5+uc2+8wqSeVfAQ==" length="4545901" type="application/octet-stream"/>
         </item>
         <item>
@@ -17,7 +17,7 @@
             <sparkle:version>5</sparkle:version>
             <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.2.0</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.2.0.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.2.0/Radix.zip" sparkle:edSignature="/FE5EUHIRDy5W6XXdPCSeMWLG/fYbxDxfLPkPKMPpRszXyOY8TtAG0fde/MOVuVTGaSKXI5ANRFK3LHWEp2kAA==" length="4318577" type="application/octet-stream"/>
         </item>
         <item>
@@ -26,7 +26,7 @@
             <sparkle:version>4</sparkle:version>
             <sparkle:shortVersionString>1.1.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.1.2</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.1.2.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.1.2/Radix.zip" sparkle:edSignature="TkqhTf0AyDYaX+V7DNAi5/vnqel6pMzBKnm4kRmal/sEmqyA4h89sHGzKernwq4l2rcTYCyRSnZ6R+L9Ose2Dg==" length="3764791" type="application/octet-stream"/>
         </item>
         <item>
@@ -35,7 +35,7 @@
             <sparkle:version>3</sparkle:version>
             <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.1.1</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.1.1.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.1.1/Radix.zip" sparkle:edSignature="Sige6HQPW6WnQV7fIe1tWT2sDX9qPdyKT+WhlQCgawIg9tbcYhyxXAhXY6mMTiVhnk++k2911s0fQ9Wq4eibAQ==" length="3574280" type="application/octet-stream"/>
         </item>
         <item>
@@ -44,7 +44,7 @@
             <sparkle:version>2</sparkle:version>
             <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.1.0-2</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.1.0-2.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.1.0-2/Radix.zip" length="3502321" type="application/octet-stream"/>
         </item>
         <item>
@@ -53,7 +53,7 @@
             <sparkle:version>1</sparkle:version>
             <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/colinvkim/Radix/releases/tag/v1.0.0-1</sparkle:releaseNotesLink>
+            <sparkle:releaseNotesLink>https://radix.colinkim.dev/releases/v1.0.0-1.md</sparkle:releaseNotesLink>
             <enclosure url="https://github.com/colinvkim/Radix/releases/download/v1.0.0-1/Radix.zip" length="3427964" type="application/octet-stream"/>
         </item>
     </channel>
