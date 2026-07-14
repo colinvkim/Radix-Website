@@ -10,7 +10,7 @@ import {
   Terminal,
   Copy,
   Check,
-  ChevronRight,
+  Maximize2,
   Star,
   X,
 } from "lucide-react";
@@ -172,18 +172,21 @@ const HomebrewInstall: React.FC<HomebrewInstallProps> = ({ trackLabel }) => {
 };
 
 interface FeatureCardProps {
+  id?: string;
   icon: React.ReactNode;
   title: string;
   description: string;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
+  id,
   icon,
   title,
   description,
 }) => (
   <motion.div
-    className="h-full"
+    id={id}
+    className="h-full scroll-mt-28"
     variants={fadeInUp}
     whileHover="hover"
     initial="rest"
@@ -284,6 +287,9 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
     <motion.div
       key="backdrop"
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -291,7 +297,7 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
     >
       <motion.div
         key="modal"
-        className="relative max-w-5xl w-full"
+        className="relative w-full max-w-[min(96vw,1500px)]"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -301,44 +307,116 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
         <button
           onClick={onClose}
           className="absolute -top-12 right-0 text-[#a09888] hover:text-[#f5f0eb] transition-colors"
-          aria-label="Close preview"
+          aria-label="Close screenshot"
         >
           <X className="w-6 h-6" />
         </button>
         <img
           src={src}
           alt={alt}
-          className="w-full h-auto rounded-2xl shadow-2xl"
+          className="max-h-[85vh] w-full rounded-2xl object-contain shadow-2xl"
         />
       </motion.div>
     </motion.div>
   );
 };
 
+interface ProductShowcase {
+  number: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+}
+
+const productShowcases: ProductShowcase[] = [
+  {
+    number: "01",
+    eyebrow: "Explore without losing context",
+    title: "Everything you need, in one view.",
+    description:
+      "Move from a whole drive to a single file while Smart Locations, the visualization, file table, inspector, and cleanup tools stay in sync.",
+    image: "/images/radix-sunburst.png",
+    alt: "Radix showing a sunburst visualization with Smart Locations, file table, inspector, and Discard Pile",
+  },
+  {
+    number: "02",
+    eyebrow: "Choose the clearest perspective",
+    title: "Switch from hierarchy to scale.",
+    description:
+      "Use the sunburst to follow directory structure or switch to the treemap to make oversized folders immediately obvious. The surrounding browser and inspector remain connected to your selection.",
+    image: "/images/radix-treemap.png",
+    alt: "Radix showing a treemap visualization of disk usage",
+  },
+  {
+    number: "03",
+    eyebrow: "Compare scans over time",
+    title: "See what changed, not just what is large.",
+    description:
+      "Compare two scans to find files and folders that grew, shrank, appeared, or disappeared. Search the results and trace every change back through its directory hierarchy.",
+    image: "/images/radix-scan-comparison.png",
+    alt: "Radix scan comparison showing files and folders that changed over time",
+  },
+];
+
+interface ProductScreenshotProps {
+  showcase: ProductShowcase;
+  onExpand: () => void;
+}
+
+const ProductScreenshot: React.FC<ProductScreenshotProps> = ({
+  showcase,
+  onExpand,
+}) => (
+  <article>
+    <div className="mb-9 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
+      <div>
+        <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-[#d4a054]">
+          {showcase.number} · {showcase.eyebrow}
+        </span>
+        <h3 className="max-w-xl font-display text-3xl leading-tight text-[#f5f0eb] md:text-4xl lg:text-5xl">
+          {showcase.title}
+        </h3>
+      </div>
+      <p className="mb-0 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#a09888] lg:justify-self-end">
+        {showcase.description}
+      </p>
+    </div>
+
+    <button
+      type="button"
+      className="group block w-full cursor-zoom-in text-left"
+      onClick={onExpand}
+      aria-label={`Enlarge ${showcase.title} screenshot`}
+    >
+      <Glass className="relative rounded-2xl p-1.5 shadow-[0_28px_80px_rgba(0,0,0,0.32)] md:p-2.5">
+        <div className="relative aspect-[3074/2024] overflow-hidden rounded-xl">
+          <img
+            src={showcase.image}
+            alt={showcase.alt}
+            width={3074}
+            height={2024}
+            className="relative z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.005]"
+            loading="lazy"
+          />
+
+          <span className="absolute bottom-3 right-3 z-30 hidden items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-xs font-medium text-white/80 opacity-0 shadow-lg backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 md:inline-flex">
+            <Maximize2 className="h-3.5 w-3.5 text-[#d4a054]" />
+            Enlarge
+          </span>
+        </div>
+      </Glass>
+    </button>
+
+  </article>
+);
+
 const App: React.FC = () => {
   const [modalImage, setModalImage] = useState<{
     src: string;
     alt: string;
   } | null>(null);
-
-  const features = [
-    {
-      number: "01",
-      title: "Interactive Sunburst Visualization",
-      description:
-        "Navigate your disk space through an intuitive circular visualization. Each ring represents a directory, each sector a file. Click to drill down, hover for details, and discover what's consuming your space.",
-      cta: "Preview",
-      image: "/images/feature-sunburst.png",
-    },
-    {
-      number: "02",
-      title: "Lightning-Fast Scanning Engine",
-      description:
-        "Built with Swift and native macOS APIs, Radix uses iterative traversal to scan millions of files in seconds. Real-time progress updates show you exactly what's happening.",
-      cta: "Preview",
-      image: "/images/feature-scan.png",
-    },
-  ];
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen relative">
@@ -350,7 +428,7 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           HERO
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative h-[1000px] flex flex-col">
+      <section className="relative flex min-h-[860px] flex-col md:min-h-[900px]">
         <div className="absolute inset-0 z-0">
           <VideoBackground
             src="/videos/hero.mp4"
@@ -391,9 +469,10 @@ const App: React.FC = () => {
             animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            Radix is a native macOS disk space analyzer that scans millions of
-            files in seconds and visualizes results through an interactive
-            sunburst chart. Built in Swift/SwiftUI for blazing performance.
+            Radix scans millions of files and turns your Mac’s storage into a
+            clear, interactive map. Explore with sunburst and treemap views,
+            compare changes over time, and safely review what to clean up — all
+            locally on your Mac.
           </motion.p>
 
           <motion.div
@@ -432,7 +511,7 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           HOW IT WORKS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[700px] py-32 px-6 md:px-16 lg:px-24">
+      <section className="relative min-h-[560px] px-6 py-20 md:px-16 md:py-24 lg:px-24">
         <div className="absolute inset-0 z-0">
           <VideoBackground
             src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
@@ -444,7 +523,7 @@ const App: React.FC = () => {
         </div>
 
         <motion.div
-          className="relative z-10 flex flex-col items-center justify-center min-h-[500px] text-center"
+          className="relative z-10 flex min-h-[400px] flex-col items-center justify-center text-center md:min-h-[420px]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -479,51 +558,28 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           FEATURES — ALTERNATING ROWS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6 md:px-16 lg:px-24">
+      <section id="product" className="scroll-mt-28 px-6 pb-28 pt-16 md:px-16 md:pt-20 lg:px-24">
         <div className="max-w-7xl mx-auto">
           <SectionBadge>Capabilities</SectionBadge>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-[#f5f0eb] mb-20 leading-[1]">
-            Native power. Beautiful design.
+          <h2 className="mb-8 max-w-4xl font-display text-4xl leading-[1] text-[#f5f0eb] md:text-5xl lg:text-6xl">
+            The whole drive, in full view.
           </h2>
+          <p className="mb-20 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#a09888]">
+            Radix keeps the map, browser, inspector, and cleanup tools together,
+            so you can move from discovery to a decision without losing your place.
+          </p>
 
-          {features.map((feature, i) => (
-            <div
-              key={feature.number}
-              className={`flex flex-col lg:flex-row items-center gap-16 ${i === 0 ? "mb-28" : ""}`}
-            >
-              <div className={`flex-1 ${i === 1 ? "lg:order-1" : ""}`}>
-                <span className="text-[#d4a054] font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4 block">
-                  {feature.number}
-                </span>
-                <h3 className="text-3xl md:text-4xl font-display text-[#f5f0eb] mb-5 leading-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-8 max-w-lg">
-                  {feature.description}
-                </p>
-                <button
-                  type="button"
-                  className="liquid-glass-strong rounded-lg glow-button inline-flex cursor-pointer items-center gap-2 px-6 py-2.5 text-sm font-medium text-[#f5f0eb]"
-                  onClick={() =>
-                    setModalImage({ src: feature.image, alt: feature.title })
-                  }
-                >
-                  {feature.cta}
-                  <ChevronRight className="w-4 h-4 text-[#d4a054]" />
-                </button>
-              </div>
-              <div className={`flex-1 ${i === 1 ? "lg:order-0" : ""}`}>
-                <Glass className="rounded-2xl p-2 overflow-hidden h-[400px]">
-                  <img
-                    src={feature.image}
-                    alt={feature.title}
-                    className="w-full h-full object-contain rounded-xl relative z-10"
-                    loading="lazy"
-                  />
-                </Glass>
-              </div>
-            </div>
-          ))}
+          <div className="space-y-24 md:space-y-32">
+            {productShowcases.map((showcase) => (
+              <ProductScreenshot
+                key={showcase.number}
+                showcase={showcase}
+                onExpand={() =>
+                  setModalImage({ src: showcase.image, alt: showcase.alt })
+                }
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -535,7 +591,7 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           FEATURES GRID
           ═══════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6 md:px-16 lg:px-24">
+      <section id="features" className="scroll-mt-28 py-28 px-6 md:px-16 lg:px-24">
         <motion.div
           className="max-w-7xl mx-auto"
           initial="hidden"
@@ -570,6 +626,7 @@ const App: React.FC = () => {
               description="Drag and drop any folder to instantly scan. See real-time progress as Radix traverses your files."
             />
             <FeatureCard
+              id="privacy"
               icon={<Shield className="w-6 h-6 text-[#d4a054]" />}
               title="Privacy-First"
               description="Everything runs locally on your Mac. No data collection, no telemetry, no account required."
