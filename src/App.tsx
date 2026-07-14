@@ -428,7 +428,7 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           HERO
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative flex min-h-[860px] flex-col md:min-h-[900px]">
+      <section className="relative flex min-h-[860px] flex-col pt-24 md:min-h-[900px]">
         <div className="absolute inset-0 z-0">
           <VideoBackground
             src="/videos/hero.mp4"
@@ -439,7 +439,7 @@ const App: React.FC = () => {
           <VideoFade position="bottom" />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center px-4 md:px-8 lg:px-12 pt-[150px]">
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-16 md:px-8 lg:px-12">
           <motion.div
             className="mb-10"
             initial={{ opacity: 0, y: 20 }}
