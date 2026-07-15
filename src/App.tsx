@@ -493,16 +493,14 @@ const App: React.FC = () => {
                 Download Radix
               </GlassButton>
 
-              <a
+              <GlassButton
                 href={GITHUB_URL}
-                className="hero-frosted-glass liquid-glass-strong inline-flex w-full items-center justify-center gap-2 rounded-lg px-8 py-4 text-center text-[15px] font-semibold tracking-wide text-[#f5f0eb] sm:w-auto"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View Radix on GitHub"
+                trackLabel="Hero GitHub"
+                className="hero-frosted-glass"
               >
                 <GithubIcon className="w-5 h-5" />
                 View on GitHub
-              </a>
+              </GlassButton>
             </div>
 
             <HomebrewInstall trackLabel="Hero Homebrew Copy" />
