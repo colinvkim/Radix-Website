@@ -150,24 +150,38 @@ const HomebrewInstall: React.FC<HomebrewInstallProps> = ({ trackLabel }) => {
   };
 
   return (
-    <div className="hero-frosted-glass liquid-glass-strong flex w-full max-w-[390px] items-center gap-3 rounded-lg px-4 py-3 text-left sm:w-auto">
-      <Terminal className="h-4 w-4 shrink-0 text-[#d4a054]" />
-      <code className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px] font-medium text-[#f5f0eb]">
-        {HOMEBREW_COMMAND}
-      </code>
+    <>
       <button
         type="button"
-        className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/10 text-[#a09888] transition-colors hover:border-amber-500/40 hover:text-[#d4a054]"
+        className="hero-frosted-glass liquid-glass-strong flex w-[15.5rem] items-center justify-center gap-2.5 rounded-lg px-3.5 py-3 text-left sm:hidden"
         onClick={copyCommand}
         aria-label={copied ? "Homebrew command copied" : "Copy Homebrew command"}
       >
-        {copied ? (
-          <Check className="h-3.5 w-3.5" />
-        ) : (
-          <Copy className="h-3.5 w-3.5" />
-        )}
+        <Terminal className="h-4 w-4 shrink-0 text-[#d4a054]" />
+        <code className="min-w-0 whitespace-nowrap font-mono text-[12px] font-medium text-[#f5f0eb]">
+          {HOMEBREW_COMMAND}
+        </code>
       </button>
-    </div>
+
+      <div className="hero-frosted-glass liquid-glass-strong hidden w-full max-w-[390px] items-center gap-3 rounded-lg px-4 py-3 text-left sm:flex sm:w-auto">
+        <Terminal className="h-4 w-4 shrink-0 text-[#d4a054]" />
+        <code className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px] font-medium text-[#f5f0eb]">
+          {HOMEBREW_COMMAND}
+        </code>
+        <button
+          type="button"
+          className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/10 text-[#a09888] transition-colors hover:border-amber-500/40 hover:text-[#d4a054]"
+          onClick={copyCommand}
+          aria-label={copied ? "Homebrew command copied" : "Copy Homebrew command"}
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
+        </button>
+      </div>
+    </>
   );
 };
 
@@ -453,7 +467,7 @@ const App: React.FC = () => {
           <BlurText
             as="h1"
             text="Your Mac's Disk Space, Beautifully Visualized"
-            className="text-5xl md:text-6xl lg:text-[4.5rem] font-display italic text-[#f5f0eb] leading-[0.8] tracking-[-4px] text-center mb-8"
+            className="text-5xl font-display italic text-[#f5f0eb] leading-[0.9] tracking-[-2px] text-center mb-8 sm:leading-[0.8] sm:tracking-[-4px] md:text-6xl lg:text-[4.5rem]"
             delay={0.3}
           />
 
@@ -487,7 +501,7 @@ const App: React.FC = () => {
               <GlassButton
                 href={DOWNLOAD_URL}
                 trackLabel="Hero Download"
-                className="hero-frosted-glass"
+                className="hero-frosted-glass w-[15.5rem] sm:w-auto"
               >
                 <Download className="w-5 h-5 text-[#d4a054]" />
                 Download Radix
@@ -496,7 +510,7 @@ const App: React.FC = () => {
               <GlassButton
                 href={GITHUB_URL}
                 trackLabel="Hero GitHub"
-                className="hero-frosted-glass"
+                className="hero-frosted-glass w-[15.5rem] sm:w-auto"
               >
                 <GithubIcon className="w-5 h-5" />
                 View on GitHub
