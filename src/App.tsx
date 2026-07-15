@@ -150,7 +150,7 @@ const HomebrewInstall: React.FC<HomebrewInstallProps> = ({ trackLabel }) => {
   };
 
   return (
-    <div className="liquid-glass-strong rounded-lg flex w-full max-w-[390px] items-center gap-3 px-4 py-3 text-left sm:w-auto">
+    <div className="hero-frosted-glass liquid-glass-strong flex w-full max-w-[390px] items-center gap-3 rounded-lg px-4 py-3 text-left sm:w-auto">
       <Terminal className="h-4 w-4 shrink-0 text-[#d4a054]" />
       <code className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px] font-medium text-[#f5f0eb]">
         {HOMEBREW_COMMAND}
@@ -477,19 +477,24 @@ const App: React.FC = () => {
 
           <motion.div
             className="flex w-full flex-col items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.5, ease: EASE }}
+            style={{ willChange: "opacity, transform" }}
           >
             <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
-              <GlassButton href={DOWNLOAD_URL} trackLabel="Hero Download">
+              <GlassButton
+                href={DOWNLOAD_URL}
+                trackLabel="Hero Download"
+                className="hero-frosted-glass"
+              >
                 <Download className="w-5 h-5 text-[#d4a054]" />
                 Download Radix
               </GlassButton>
 
               <a
                 href={GITHUB_URL}
-                className="liquid-glass-strong rounded-lg inline-flex w-full items-center justify-center gap-2 px-8 py-4 text-center text-[15px] font-medium text-[#f5f0eb] tracking-wide opacity-60 transition-opacity duration-300 hover:opacity-100 sm:w-auto"
+                className="hero-frosted-glass liquid-glass-strong inline-flex w-full items-center justify-center gap-2 rounded-lg px-8 py-4 text-center text-[15px] font-semibold tracking-wide text-[#f5f0eb] sm:w-auto"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="View Radix on GitHub"
