@@ -463,17 +463,24 @@ const App: React.FC = () => {
             delay={0.3}
           />
 
-          <motion.p
-            className="max-w-2xl mx-auto text-center text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-12"
-            initial={{ opacity: 0, filter: "blur(5px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            Radix scans millions of files and turns your Mac’s storage into a
-            clear, interactive map. Explore with sunburst and treemap views,
-            compare changes over time, and safely review what to clean up — all
-            locally on your Mac.
-          </motion.p>
+          <div className="hero-copy-spotlight relative mb-12 w-full max-w-5xl">
+            <motion.p
+              className="relative z-10 mx-auto max-w-5xl text-center font-body text-base font-normal leading-[1.75] text-[#d4cec5] [text-shadow:0_2px_18px_rgba(0,0,0,0.9)]"
+              initial={{ opacity: 0, filter: "blur(5px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            >
+              <span className="lg:block">
+                Radix scans millions of files and turns your Mac’s storage into
+                a clear, interactive map.
+              </span>{" "}
+              <span className="lg:block">
+                Explore with sunburst and treemap views, compare changes over
+                time, and safely review what to clean up — all locally on your
+                Mac.
+              </span>
+            </motion.p>
+          </div>
 
           <motion.div
             className="flex w-full flex-col items-center gap-4"
@@ -517,15 +524,10 @@ const App: React.FC = () => {
           HOW IT WORKS
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative min-h-[560px] px-6 py-20 md:px-16 md:py-24 lg:px-24">
-        <div className="absolute inset-0 z-0">
-          <VideoBackground
-            src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
-            className="w-full h-full"
-          />
-          <div className="absolute inset-0 bg-black/50 z-0" />
-          <VideoFade position="top" />
-          <VideoFade position="bottom" />
-        </div>
+        <div
+          className="how-it-works-backdrop absolute inset-0 z-0"
+          aria-hidden="true"
+        />
 
         <motion.div
           className="relative z-10 flex min-h-[400px] flex-col items-center justify-center text-center md:min-h-[420px]"
@@ -547,9 +549,9 @@ const App: React.FC = () => {
             variants={fadeInUp}
             className="max-w-2xl mx-auto text-center text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10"
           >
-            Drag and drop any folder to instantly see a beautiful sunburst
-            visualization of your disk space. Click any segment to drill down
-            and explore your files with unprecedented clarity.
+            Choose a folder or volume to scan. Explore it with sunburst and
+            treemap views, search and inspect files, compare scans over time,
+            and review cleanup candidates before moving anything to the Trash.
           </motion.p>
           <motion.div variants={fadeInUp}>
             <GlassButton href={DOWNLOAD_URL} trackLabel="How It Works" className="cta-pulse">
