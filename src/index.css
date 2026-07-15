@@ -181,6 +181,12 @@ body::before {
     -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.72) 42%, transparent 72%);
   }
 
+  .final-cta-backdrop {
+    background:
+      radial-gradient(ellipse 58% 48% at 50% 34%, rgba(245, 240, 235, 0.055) 0%, rgba(212, 160, 84, 0.025) 34%, transparent 72%),
+      linear-gradient(to bottom, #0a0a0a 0%, #0b0b0b 48%, #0a0a0a 100%);
+  }
+
   .liquid-glass-strong::before {
     content: '';
     position: absolute;

@@ -687,25 +687,39 @@ const App: React.FC = () => {
       {/* ═══════════════════════════════════════════════════════════
           CTA FOOTER
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative pt-28 pb-0 px-6 md:px-16 lg:px-24 bg-[#0a0a0a]">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 overflow-hidden">
-            <VideoBackground
-              src="https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8"
-              className="w-full h-full"
+      <section className="relative bg-[#0a0a0a] px-6 pb-0 pt-36 md:px-16 md:pt-40 lg:px-24">
+        <div
+          className="final-cta-backdrop absolute inset-0 z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <svg
+            className="absolute -bottom-[10%] -right-[70%] h-[80%] w-[150%] md:-bottom-[45%] md:-right-[12%] md:h-[125%] md:w-[75%]"
+            viewBox="0 0 800 800"
+            fill="none"
+          >
+            <defs>
+              <linearGradient
+                id="final-cta-arc"
+                x1="80"
+                y1="760"
+                x2="760"
+                y2="80"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#75408f" stopOpacity="0" />
+                <stop offset="0.56" stopColor="#8f4eb2" stopOpacity="0.28" />
+                <stop offset="1" stopColor="#bd72df" stopOpacity="0.58" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 80 760 A 680 680 0 0 1 760 80"
+              stroke="url(#final-cta-arc)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              opacity="0.24"
             />
-          </div>
-          <div className="absolute inset-0 bg-black/60 z-0" />
-          <VideoFade position="top" />
-          <div
-            className="absolute bottom-0 left-0 right-0 z-[1]"
-            style={{
-              height: "120px",
-              background:
-                "linear-gradient(to top, #0a0a0a 0%, transparent 100%)",
-            }}
-            aria-hidden="true"
-          />
+          </svg>
         </div>
 
         <motion.div
@@ -718,16 +732,9 @@ const App: React.FC = () => {
           <motion.div variants={fadeInUp}>
             <BlurText
               text="See what Radix can find."
-              className="text-5xl md:text-6xl lg:text-7xl font-display text-[#f5f0eb] text-center mb-8 leading-[1]"
+              className="text-5xl md:text-6xl lg:text-7xl font-display text-[#f5f0eb] text-center mb-10 leading-[1]"
             />
           </motion.div>
-          <motion.p
-            variants={fadeInUp}
-            className="max-w-2xl mx-auto text-[#a09888] font-body font-light text-[15px] leading-relaxed mb-10"
-          >
-            Download Radix today and reclaim your disk space. Open source and
-            free forever.
-          </motion.p>
           <motion.div variants={fadeInUp}>
             <GlassButton href={DOWNLOAD_URL} trackLabel="Footer Download">
               <Download className="w-5 h-5 text-[#d4a054]" />
@@ -735,6 +742,13 @@ const App: React.FC = () => {
               <ArrowUpRight className="w-4 h-4" />
             </GlassButton>
           </motion.div>
+          <motion.p
+            variants={fadeInUp}
+            className="mx-auto mt-6 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#8f8779]"
+          >
+            Download Radix today and reclaim your disk space. Open source and
+            free forever.
+          </motion.p>
         </motion.div>
 
         {/* Footer */}
