@@ -390,23 +390,21 @@ const ProductScreenshot: React.FC<ProductScreenshotProps> = ({
       onClick={onExpand}
       aria-label={`Enlarge ${showcase.title} screenshot`}
     >
-      <Glass className="relative rounded-2xl p-1.5 shadow-[0_28px_80px_rgba(0,0,0,0.32)] md:p-2.5">
-        <div className="relative aspect-[3074/2024] overflow-hidden rounded-xl">
-          <img
-            src={showcase.image}
-            alt={showcase.alt}
-            width={3074}
-            height={2024}
-            className="relative z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.005]"
-            loading="lazy"
-          />
+      <div className="relative aspect-[3074/2024] overflow-hidden rounded-2xl shadow-[0_30px_90px_rgba(0,0,0,0.42)]">
+        <img
+          src={showcase.image}
+          alt={showcase.alt}
+          width={3074}
+          height={2024}
+          className="relative z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.005]"
+          loading="lazy"
+        />
 
-          <span className="absolute bottom-3 right-3 z-30 hidden items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-xs font-medium text-white/80 opacity-0 shadow-lg backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 md:inline-flex">
-            <Maximize2 className="h-3.5 w-3.5 text-[#d4a054]" />
-            Enlarge
-          </span>
-        </div>
-      </Glass>
+        <span className="absolute bottom-3 right-3 z-30 hidden items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-xs font-medium text-white/80 opacity-0 shadow-lg backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 md:inline-flex">
+          <Maximize2 className="h-3.5 w-3.5 text-[#d4a054]" />
+          Enlarge
+        </span>
+      </div>
     </button>
 
   </article>
@@ -569,7 +567,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <SectionBadge>Capabilities</SectionBadge>
           <h2 className="mb-8 max-w-4xl font-display text-4xl leading-[1] text-[#f5f0eb] md:text-5xl lg:text-6xl">
-            The whole drive, in full view.
+            See Radix at work.
           </h2>
           <p className="mb-20 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#a09888]">
             Radix keeps the map, browser, inspector, and cleanup tools together,
