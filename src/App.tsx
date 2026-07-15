@@ -323,7 +323,6 @@ const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
 
 interface ProductShowcase {
   number: string;
-  eyebrow: string;
   title: string;
   description: string;
   image: string;
@@ -333,28 +332,25 @@ interface ProductShowcase {
 const productShowcases: ProductShowcase[] = [
   {
     number: "01",
-    eyebrow: "Explore without losing context",
     title: "Everything you need, in one view.",
     description:
-      "Move from a whole drive to a single file while Smart Locations, the visualization, file table, inspector, and cleanup tools stay in sync.",
+      "Start with the whole drive, then search, inspect, and add cleanup candidates to the Discard Pile without losing your place.",
     image: "/images/radix-sunburst.png",
     alt: "Radix showing a sunburst visualization with Smart Locations, file table, inspector, and Discard Pile",
   },
   {
     number: "02",
-    eyebrow: "Choose the clearest perspective",
     title: "Switch from hierarchy to scale.",
     description:
-      "Use the sunburst to follow directory structure or switch to the treemap to make oversized folders immediately obvious. The surrounding browser and inspector remain connected to your selection.",
+      "Use the sunburst to follow folder structure or switch to the treemap to surface the largest items at a glance.",
     image: "/images/radix-treemap.png",
     alt: "Radix showing a treemap visualization of disk usage",
   },
   {
     number: "03",
-    eyebrow: "Compare scans over time",
     title: "See what changed, not just what is large.",
     description:
-      "Compare two scans to find files and folders that grew, shrank, appeared, or disappeared. Search the results and trace every change back through its directory hierarchy.",
+      "Compare scans to see what grew, shrank, appeared, or disappeared — and trace every change back to its folder.",
     image: "/images/radix-scan-comparison.png",
     alt: "Radix scan comparison showing files and folders that changed over time",
   },
@@ -369,17 +365,17 @@ const ProductScreenshot: React.FC<ProductScreenshotProps> = ({
   showcase,
   onExpand,
 }) => (
-  <article>
-    <div className="mb-9 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
+  <article id={`product-${showcase.number}`} className="scroll-mt-28">
+    <div className="mb-9 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
       <div>
         <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-[#d4a054]">
-          {showcase.number} · {showcase.eyebrow}
+          {showcase.number}
         </span>
         <h3 className="max-w-xl font-display text-3xl leading-tight text-[#f5f0eb] md:text-4xl lg:text-5xl">
           {showcase.title}
         </h3>
       </div>
-      <p className="mb-0 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#a09888] lg:justify-self-end">
+      <p className="mb-0 max-w-md border-l border-white/15 pl-6 font-body text-base font-normal leading-[1.75] text-[#b7afa3] [text-wrap:pretty] lg:flex lg:min-h-[108px] lg:items-center lg:justify-self-end">
         {showcase.description}
       </p>
     </div>
@@ -565,14 +561,36 @@ const App: React.FC = () => {
           ═══════════════════════════════════════════════════════════ */}
       <section id="product" className="scroll-mt-28 px-6 pb-28 pt-16 md:px-16 md:pt-20 lg:px-24">
         <div className="max-w-7xl mx-auto">
-          <SectionBadge>Capabilities</SectionBadge>
-          <h2 className="mb-8 max-w-4xl font-display text-4xl leading-[1] text-[#f5f0eb] md:text-5xl lg:text-6xl">
-            See Radix at work.
-          </h2>
-          <p className="mb-20 max-w-2xl font-body text-[15px] font-light leading-relaxed text-[#a09888]">
-            Radix keeps the map, browser, inspector, and cleanup tools together,
-            so you can move from discovery to a decision without losing your place.
-          </p>
+          <div className="mb-20 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <h2 className="max-w-4xl font-display text-4xl leading-[1] text-[#f5f0eb] md:text-5xl lg:text-6xl">
+              See Radix at work.
+            </h2>
+
+            <ol
+              className="grid w-full grid-cols-3 gap-3 lg:w-[440px]"
+              aria-label="Product tour sections"
+            >
+              {[
+                ["01", "Explore"],
+                ["02", "Visualize"],
+                ["03", "Compare"],
+              ].map(([number, label]) => (
+                <li key={number} className="font-body">
+                  <a
+                    href={`#product-${number}`}
+                    className="group block border-t border-white/15 pt-3 transition-colors hover:border-[#d4a054]/60"
+                  >
+                    <span className="mb-1 block text-[10px] font-semibold tracking-[0.2em] text-[#d4a054]">
+                      {number}
+                    </span>
+                    <span className="block text-sm font-medium text-[#b7afa3] transition-colors group-hover:text-[#f5f0eb]">
+                      {label}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
 
           <div className="space-y-24 md:space-y-32">
             {productShowcases.map((showcase) => (
