@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight,
-  Zap,
-  Palette,
-  BarChart3,
-  Shield,
+  AppWindowMac,
+  Trash2,
+  Gauge,
+  Archive,
   Download,
   Terminal,
   Copy,
@@ -634,25 +634,25 @@ const App: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
             <FeatureCard
-              icon={<Zap className="w-6 h-6 text-[#d4a054]" />}
-              title="Sunburst Visualization"
-              description="Explore your disk with an interactive circular chart. Click any segment to drill down into nested directories."
-            />
-            <FeatureCard
-              icon={<Palette className="w-6 h-6 text-[#d4a054]" />}
-              title="Sort & Filter"
-              description="Sort files by size, name, or date. Filter by file type to quickly find what's taking up space."
-            />
-            <FeatureCard
-              icon={<BarChart3 className="w-6 h-6 text-[#d4a054]" />}
-              title="Drop to Scan"
-              description="Drag and drop any folder to instantly scan. See real-time progress as Radix traverses your files."
-            />
-            <FeatureCard
               id="privacy"
-              icon={<Shield className="w-6 h-6 text-[#d4a054]" />}
-              title="Privacy-First"
-              description="Everything runs locally on your Mac. No data collection, no telemetry, no account required."
+              icon={<AppWindowMac className="w-6 h-6 text-[#d4a054]" />}
+              title="Native by Design"
+              description="Built with Swift and SwiftUI to feel at home on macOS. Scans and saved results stay local, with no account required."
+            />
+            <FeatureCard
+              icon={<Trash2 className="w-6 h-6 text-[#d4a054]" />}
+              title="Discard Pile"
+              description="Drag files and folders into the Discard Pile, then review everything before moving anything to the Trash."
+            />
+            <FeatureCard
+              icon={<Gauge className="w-6 h-6 text-[#d4a054]" />}
+              title="Fast Scanning"
+              description="Scan millions of files with live progress, faster follow-up scans, and automatic summaries for folders packed with tiny files."
+            />
+            <FeatureCard
+              icon={<Archive className="w-6 h-6 text-[#d4a054]" />}
+              title="Saved Snapshots"
+              description="Export completed scans and reopen them later as read-only snapshots, ready to inspect again or compare over time."
             />
           </div>
         </motion.div>
