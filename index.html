@@ -12,6 +12,7 @@
     <meta name="author" content="Colin Kim" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://tryradix.app/" />
+    <link rel="alternate" type="text/markdown" href="https://tryradix.app/index.md" title="Radix in Markdown" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -75,6 +76,17 @@
 
     <!-- Performance -->
     <link rel="preconnect" href="https://stream.mux.com">
+    <!-- Motion's initial styles must not hide prerendered content without JS. -->
+    <noscript>
+      <style>
+        #root video { display: none; }
+        #root [style*="opacity:0"] {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

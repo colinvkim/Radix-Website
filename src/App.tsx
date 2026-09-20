@@ -767,7 +767,7 @@ const App: React.FC = () => {
         <div className="relative z-10 px-4 md:px-8 lg:px-12 py-16">
           <div className="section-divider mb-8" />
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[#6b6560] text-sm">
+            <p className="text-[#6b6560] text-sm" suppressHydrationWarning>
               © {new Date().getFullYear()} Colin Kim
             </p>
             <div className="flex items-center gap-8">

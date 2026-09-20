@@ -48,3 +48,6 @@ skills-lock.json
 # Vite
 vite.config.ts.timestamp-*
 .vite/
+
+# Vercel local build cache
+.vercel/
